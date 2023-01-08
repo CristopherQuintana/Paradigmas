@@ -1,10 +1,9 @@
-const base = require('./controllers/funciones')
+const {ElimRepetidos, Largo, FraseAMatriz, Encriptador} = require('./controllers/funciones')
 const express = require('express');
 const cors = require('cors')
 const fs = require('fs')
 const app = express();
 const port = 3000;
-const routes = require('./routes/routes')
 
 app.use(
     express.urlencoded({
@@ -43,16 +42,37 @@ app.post('/fraseNormal', (req, res) => {
 app.get('/mostrarFrases', (req, res) => {
     fs.readFile('./controllers/frases.txt', (err, fd) => {
         if (err) throw err
-        const dataArray = fd.toString();
+        const dataArray = fd.toString().split('\n')
         console.log(dataArray)
-        console.log(JSON.stringify(dataArray).split('\n'))
         res.send(JSON.stringify(dataArray))
     })
 })
 
-/*app.get('/codificarFrases', (req, res) => {
-    fs.
-})*/
+app.get('/codificarFrases', (req, res) => {
+    const obtenerSecreta = fs.readFileSync('./controllers/fraseSecreta.txt')
+    const fraseSecreta = obtenerSecreta.toString()
+    const elimRepetidos = ElimRepetidos(fraseSecreta)
+    console.log(fraseSecreta)
+    console.log(elimRepetidos)
+    const largo = Largo(elimRepetidos)
+    const matriz = FraseAMatriz(elimRepetidos)
+    const obtenerFrases = fs.readFileSync('./controllers/frases.txt')
+    const frases = obtenerFrases.toString().split('\n')
+    console.log(frases)
+    const codificadas = []
+    for(let frase of frases){
+        if(frase.length > 0){
+            let codificada = Encriptador(matriz, frase, largo)
+            codificadas.push(codificada)
+        }
+    }
+    const frasesCodificadas = codificadas.join('\n')
+    fs.writeFile('./controllers/frasesCodificadas.txt', frasesCodificadas, (err, fd) => {
+        if (err) throw err
+        console.log(frasesCodificadas)
+        res.send("las frases han sido codificadas!")
+    })
+})
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);

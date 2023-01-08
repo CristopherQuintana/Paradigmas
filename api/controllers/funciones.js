@@ -84,4 +84,10 @@ const DesencriptadorLetra = (matriz, c, largo) => {
     return c;
 }
 
-
+module.exports = {
+    ElimRepetidos,
+    Largo,
+    FraseAMatriz,
+    Encriptador,
+    Desencriptador
+}
