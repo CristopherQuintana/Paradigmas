@@ -1,12 +1,12 @@
 # Paradigmas
 Trabajo Paradigmas
 
-en carpeta api usar los siguientes comandos en terminal:
-npm init
-npm install express
-npm install cors
+En carpeta api usar los siguientes comandos en terminal:
+1. npm init
+1. npm install express
+1. npm install cors
 
-para correr api en terminal usar comando
-node index.js
+Para correr api en terminal usar comando
+1. node index.js
 
-páginas se encuentran en web/pages, se pueden interactuar con ellas directamente
+Páginas se encuentran en web/pages, se pueden interactuar con ellas directamente
