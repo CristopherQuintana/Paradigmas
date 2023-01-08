@@ -1,7 +1,9 @@
 # Paradigmas
 Trabajo Paradigmas
 
-En carpeta api usar los siguientes comandos en terminal:
+Primero, Instalar Node.js
+
+Luego, en carpeta api usar los siguientes comandos en terminal:
 1. npm init
 1. npm install express
 1. npm install cors

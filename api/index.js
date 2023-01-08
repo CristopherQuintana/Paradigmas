@@ -1,4 +1,4 @@
-const {ElimRepetidos, Largo, FraseAMatriz, Encriptador} = require('./controllers/funciones')
+const {ElimRepetidos, Largo, FraseAMatriz, Encriptador, Desencriptador} = require('./controllers/funciones')
 const express = require('express');
 const cors = require('cors')
 const fs = require('fs')
@@ -73,6 +73,51 @@ app.get('/codificarFrases', (req, res) => {
         res.send("las frases han sido codificadas!")
     })
 })
+
+app.get('/decodificarFrases', (req, res) => {
+    const obtenerSecreta = fs.readFileSync('./controllers/fraseSecreta.txt')
+    const fraseSecreta = obtenerSecreta.toString()
+    const elimRepetidos = ElimRepetidos(fraseSecreta)
+    console.log(fraseSecreta)
+    console.log(elimRepetidos)
+    const largo = Largo(elimRepetidos)
+    const matriz = FraseAMatriz(elimRepetidos)
+    const obtenerFrases = fs.readFileSync('./controllers/frasesCodificadas.txt')
+    const frases = obtenerFrases.toString().split('\n')
+    console.log(frases)
+    const decodificadas = []
+    for(let frase of frases){
+        if(frase.length > 0){
+            let decodificada = Desencriptador(matriz, frase, largo)
+            decodificadas.push(decodificada)
+        }
+    }
+    const frasesDecodificadas = decodificadas.join('\n')
+    fs.writeFile('./controllers/frasesDecodificadas.txt', frasesDecodificadas, (err, fd) => {
+        if (err) throw err
+        console.log(frasesDecodificadas)
+        res.send("las frases han sido decodificadas!")
+    })
+})
+
+app.get('/mostrarFrasesCodificadas', (req, res) => {
+    fs.readFile('./controllers/frasesCodificadas.txt', (err, fd) => {
+        if (err) throw err
+        const dataArray = fd.toString().split('\n')
+        console.log(dataArray)
+        res.send(JSON.stringify(dataArray))
+    })
+})
+
+app.get('/mostrarFrasesDecodificadas', (req, res) => {
+    fs.readFile('./controllers/frasesDecodificadas.txt', (err, fd) => {
+        if (err) throw err
+        const dataArray = fd.toString().split('\n')
+        console.log(dataArray)
+        res.send(JSON.stringify(dataArray))
+    })
+})
+
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
