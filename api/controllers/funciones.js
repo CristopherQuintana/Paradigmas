@@ -1,5 +1,3 @@
-const FraseSecreta = () => {return prompt("Ingrese frase secreta:")} 
-
 const ElimRepetidos = (frase) => {
     return [...new Set(frase.replace(/\W/g,"").toLowerCase().split(''))]
 }
@@ -16,8 +14,6 @@ const FraseAMatriz = (str) => {
     }
     return matrix
 }
-
-const Frase = () => {return prompt("Ingrese frase a encriptar: ")}
 
 const Encriptador = (matriz, frase, largo) => {
     const nuevo = new Array()
