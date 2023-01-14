@@ -6,8 +6,10 @@ fraseN.addEventListener("submit", (event) => {
     let frase = {frase:fraseNormal}
     let fraseJson = JSON.stringify(frase)
     fetch('http://localhost:3000/fraseNormal', {
-        method:'Post',
+        method:'POST',
         body: fraseJson
     })
+    console.log('test')
+    window.location.href = "mostrarFraseCodificada.html"
     //mandar datos a api
 })

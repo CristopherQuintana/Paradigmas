@@ -1,4 +1,4 @@
-const test = async () => {
+const fraseCodificada = async () => {
     const response = await fetch('http:/localhost:3000/mostrarFrasesCodificadas')
     const arrayFrases = await response.json()
     const tableContainer =  document.getElementById("table-container")
@@ -6,7 +6,7 @@ const test = async () => {
     <table>
         <thead>
             <tr>
-                <th>Frase</th>
+                <th>Frases Codificadas</th>
             </tr>
             </thead>
             <tbody>
@@ -18,10 +18,10 @@ const test = async () => {
                     `;
                 }).join('')}
             </tbody>
-        </table>
+    </table>
 `
 // Insertamos la tabla en el elemento
     tableContainer.innerHTML = tableHTML;
 }
 
-test()
+fraseCodificada()

@@ -1,6 +1,7 @@
-const test = async () => {
-    const response = await fetch('http:/localhost:3000/mostrarFrasesDecodificadas')
+const tablaBotones = async () => {
+    const response = await fetch('http:/localhost:3000/mostrarFrasesSecretas')
     const arrayFrases = await response.json()
+    console.log(arrayFrases)
     const tableContainer =  document.getElementById("table-container")
     const tableHTML =  `
     <table>
@@ -13,7 +14,7 @@ const test = async () => {
                 ${arrayFrases.map(frase => {
                     return `
                     <tr>
-                        <td>${frase}</td>
+                        <td><a href="fraseNormal.html"><button onClick = "sendData('${frase}')">${frase}</button></td></a>
                     </tr>
                     `;
                 }).join('')}
@@ -22,6 +23,17 @@ const test = async () => {
 `
 // Insertamos la tabla en el elemento
     tableContainer.innerHTML = tableHTML;
+
 }
 
-test()
+tablaBotones()
+
+const sendData = (frase) => {
+    fetch('http:/localhost:3000/selFraseSecreta', {
+        method: "POST",
+        body: JSON.stringify({frase: frase})
+    })
+    .then(response => response.text())
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
+}
