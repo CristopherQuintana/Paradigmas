@@ -9,7 +9,9 @@ const guardarFrase = (tipo, frase) => {
     }
     fs.appendFile(rutaArchivo, frase + '\n', (err, fd) => {
         if (err) throw err
+        if (frase.length === 0) throw new Error('El mensaje tiene 0 de largo')
         console.log('Se ha guardado la frase')
+        console.log(frase)
     })
 }
 

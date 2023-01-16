@@ -3,8 +3,6 @@ const {ElimRepetidos, Largo, FraseAMatriz, Encriptador, Desencriptador} = requir
 
 const fraseSecretaAMatriz = (fraseSecreta) => {
     const elimRepetidos = ElimRepetidos(fraseSecreta)
-    console.log(fraseSecreta)
-    console.log(elimRepetidos)
     const largo = Largo(elimRepetidos)
     const matriz = FraseAMatriz(elimRepetidos)
     return {matriz: matriz, largo: largo}
@@ -18,8 +16,16 @@ const obtenerFrases = (txt) => {
 }
 
 const encriptar = (fraseSecreta, frase) => {
-    let data = fraseSecretaAMatriz(fraseSecreta)
+    const data = fraseSecretaAMatriz(fraseSecreta)
     return Encriptador(data.matriz, frase, data.largo)
 }
 
-module.exports = encriptar
+const desencriptar = (fraseSecreta, frase) => {
+    const data = fraseSecretaAMatriz(fraseSecreta)
+    return Desencriptador(data.matriz, frase, data.largo)
+}
+
+module.exports = {
+    encriptar, 
+    desencriptar
+}

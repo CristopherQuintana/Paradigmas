@@ -13,7 +13,7 @@ const fraseCodificada = async () => {
                 ${arrayFrases.map(frase => {
                     return `
                     <tr>
-                        <td>${frase}</td>
+                        <td>${frase.split(',')[1]}</td>
                     </tr>
                     `;
                 }).join('')}
