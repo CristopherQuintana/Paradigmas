@@ -1,33 +1,35 @@
-const fraseCodificada = async () => {
-    const response = await fetch('http:/localhost:3000/mostrarFrasesCodificadas')
+const tablaBotones = async () => {
+    const response = await fetch('http:/localhost:3000/mostrarFrasesSecretas')
     const arrayFrases = await response.json()
+    console.log(arrayFrases)
     const tableContainer =  document.getElementById("table-container")
     const tableHTML =  `
     <table>
         <thead>
             <tr>
-                <th>Seleccionar Frase a Decodificar</th>
+                <th>Frase</th>
             </tr>
             </thead>
             <tbody>
                 ${arrayFrases.map(frase => {
                     return `
                     <tr>
-                        <td><a href="mostrarFraseDecodificadaS.html"><button onClick = "sendData('${frase}')">${frase.split(',')[1]}</button></td></a>
+                        <td><a href="fraseNormalS.html"><button onClick = "sendData('${frase}')">${frase[1]}</button></td></a>
                     </tr>
                     `;
                 }).join('')}
             </tbody>
-    </table>
+        </table>
 `
 // Insertamos la tabla en el elemento
     tableContainer.innerHTML = tableHTML;
+
 }
 
-fraseCodificada()
+tablaBotones()
 
 const sendData = (frase) => {
-    fetch('http:/localhost:3000/decodificarFraseS', {
+    fetch('http:/localhost:3000/selFraseSecreta', {
         method: "POST",
         body: JSON.stringify({frase: frase})
     })
