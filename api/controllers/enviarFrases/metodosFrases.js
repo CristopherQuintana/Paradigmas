@@ -4,7 +4,11 @@ const guardarFrase = (tipo, frase) => {
     let rutaArchivo;
     if (tipo === "secreta") {
         rutaArchivo = "./controllers/frasesSecretas.txt"
-    } else {
+    }
+    else if (tipo ==="decodificada"){
+        rutaArchivo = "./controllers/frasesDecodificadas.txt"
+    }
+    else {
         rutaArchivo = "./controllers/frasesCodificadas.txt"
     }
     fs.appendFile(rutaArchivo, frase + '\n', (err, fd) => {

@@ -1,6 +1,6 @@
 const {ElimRepetidos, Largo, FraseAMatriz, Encriptador, Desencriptador} = require('./controllers/funciones')
 const guardarFrase = require('./controllers/enviarFrases/metodosFrases')
-const {encriptar, desencriptar} = require('./controllers/codificar/codificar')
+const {encriptar, desencriptar, buscarID} = require('./controllers/codificar/codificar')
 const express = require('express');
 const cors = require('cors')
 const readline = require('readline');
@@ -10,7 +10,7 @@ const port = 3000;
 
 let fraseSec = 'No ha sido cambiada'
 let fraseEn = 'No ha sido cambiada'
-let codId
+let fraseDes = 'No ha sido cambiada'
 
 app.use(
     express.urlencoded({
@@ -90,7 +90,35 @@ app.get('/mostrarFrasesDecodificadas', (req, res) => {
     })
 })
 
-app.get('')
+app.post('/decodificarFraseS', (req, res) =>{
+    const frase = req.body.frase.split(',')
+    const dataSecreta = buscarID(frase[0])
+    const fraseSecreta = dataSecreta.split(',')[1]
+    const fraseDesencriptada = desencriptar(fraseSecreta, frase[1])
+    fraseDes = fraseDesencriptada
+    guardarFrase("decodificada", frase[0] + ',' + fraseDesencriptada)
+    res.send("la frase desencriptada ha sido guardada y desencriptada")
+})
+
+app.post('/guardarFrase', (req, res) =>{
+    fraseEn = req.body.frase
+    res.send("la frase desencriptada ha sido guardada y desencriptada")
+})
+
+app.post('/decodificarFrase', (req, res) => {
+    const fraseSecret = req.body.frase.split(',')
+    const fraseSecreta = fraseSecret[1]
+    const frase = fraseEn.split(',')[1]
+    const fraseDesencriptada = desencriptar(fraseSecreta, frase)
+    fraseDes = fraseDesencriptada
+    guardarFrase("decodificada", fraseSecret[0] + ',' + fraseDesencriptada)
+    res.send("la frase desencriptada ha sido guardada y desencriptada")
+})
+
+app.get('/fraseDecodificada', (req, res) => {
+    console.log(fraseDes)
+    res.send(fraseDes)
+})
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
