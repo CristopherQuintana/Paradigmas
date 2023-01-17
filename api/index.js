@@ -111,7 +111,6 @@ app.post('/decodificarFrase', (req, res) => {
     const frase = fraseEn.split(',')[1]
     const fraseDesencriptada = desencriptar(fraseSecreta, frase)
     fraseDes = fraseDesencriptada
-    guardarFrase("decodificada", fraseSecret[0] + ',' + fraseDesencriptada)
     res.send("la frase desencriptada ha sido guardada y desencriptada")
 })
 

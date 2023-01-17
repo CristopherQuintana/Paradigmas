@@ -8,13 +8,6 @@ const fraseSecretaAMatriz = (fraseSecreta) => {
     return {matriz: matriz, largo: largo}
 }
 
-const obtenerFrases = (txt) => {
-    const obtenerFrases = fs.readFileSync(txt)
-    const frases = obtenerFrases.toString().split('\n')
-    frases.pop()
-    return frases
-}
-
 const encriptar = (fraseSecreta, frase) => {
     const data = fraseSecretaAMatriz(fraseSecreta)
     return Encriptador(data.matriz, frase, data.largo)

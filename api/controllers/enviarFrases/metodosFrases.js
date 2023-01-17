@@ -5,9 +5,6 @@ const guardarFrase = (tipo, frase) => {
     if (tipo === "secreta") {
         rutaArchivo = "./controllers/frasesSecretas.txt"
     }
-    else if (tipo ==="decodificada"){
-        rutaArchivo = "./controllers/frasesDecodificadas.txt"
-    }
     else {
         rutaArchivo = "./controllers/frasesCodificadas.txt"
     }

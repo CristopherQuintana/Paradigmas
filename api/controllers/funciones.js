@@ -17,6 +17,7 @@ const FraseAMatriz = (str) => {
 
 const Encriptador = (matriz, frase, largo) => {
     const nuevo = new Array()
+    frase = frase.toLowerCase()
     for(let letra of frase){
         nuevo.push(EncriptadorLetra(matriz, letra, largo))
     }
@@ -50,6 +51,7 @@ const EncriptadorLetra = (matriz, letra, largo) => {
 
 const Desencriptador = (matriz, frase, largo) => {
     const nuevo = new Array()
+    frase = frase.toLowerCase()
     for(let c of frase){
         nuevo.push(DesencriptadorLetra(matriz, c, largo))
     }
