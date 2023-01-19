@@ -8,7 +8,7 @@ const guardarFrase = (tipo, frase) => {
     else {
         rutaArchivo = "./controllers/frasesCodificadas.txt"
     }
-    fs.appendFile(rutaArchivo, frase + '\n', (err, fd) => {
+    fs.appendFile(rutaArchivo, frase + '\n', (err, fd) => { //el redfile borra todo el archivo y lo sobreescribe, el appendfile toma el codigo y le agrega, osea va apilando información
         if (err) throw err
         if (frase.length === 0) throw new Error('El mensaje tiene 0 de largo')
         console.log('Se ha guardado la frase')
