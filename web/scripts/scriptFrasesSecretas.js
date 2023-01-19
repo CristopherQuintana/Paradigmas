@@ -14,7 +14,7 @@ const tablaBotones = async () => {
                 ${arrayFrases.map(frase => {
                     return `
                     <tr>
-                        <td><a href="fraseNormal.html"><button onClick = "sendData('${frase}')">${frase[1]}</button></td></a>
+                        <td><a href="fraseNormal.html"><button onClick = "sendData('${frase}')">${frase[1]}</button></a></td>
                     </tr>
                     `;
                 }).join('')}
