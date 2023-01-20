@@ -63,9 +63,8 @@
             method:'POST',
             body: JSON.stringify({usuario, pass})
         })
-        console.log(response)
+        
         const respuesta = await response.json()
-        console.log(respuesta)
 
         if(respuesta.exist === true){
             //Continua a la siguiente pagina

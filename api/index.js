@@ -120,18 +120,15 @@ app.post("/verificarCredenciales", (req, res) => {
     }
     let existe = false;
     for (let usuario of data) {
-      console.log(usuario)
+      
       let datos = usuario.split(";")
-      console.log(datos)
-      console.log(user)
-      console.log(datos)
-      console.log(pass)
+      
       if (datos[0] === user && datos[1] === pass) {
-        console.log(datos)
+        
         existe = true;
       }
     }
-    console.log(existe)
+    
     if (existe === true) {
       res.send(JSON.stringify({ exist: true }));
     } else {
