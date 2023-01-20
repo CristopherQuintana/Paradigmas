@@ -5,8 +5,11 @@ const guardarFrase = (tipo, frase) => {
     if (tipo === "secreta") {
         rutaArchivo = "./controllers/frasesSecretas.txt"
     }
-    else {
+    else if(tipo === "encriptada"){
         rutaArchivo = "./controllers/frasesCodificadas.txt"
+    }
+    else {
+        rutaArchivo = "./controllers/UsuariosRegistrados.txt"
     }
     fs.appendFile(rutaArchivo, frase + '\n', (err, fd) => { //el redfile borra todo el archivo y lo sobreescribe, el appendfile toma el codigo y le agrega, osea va apilando información
         if (err) throw err

@@ -12,7 +12,7 @@
 <body>
 <div class="grid">
 
-    <form action="SuperUsuario/mostrarFrasesCodificadasS.html" method="POST" id="my-form" class="form login">
+    <form method="POST" id="my-form" class="form login">
 
     <div class="form__field">
         <label for="login__username"><svg class="icon">
@@ -34,7 +34,7 @@
 
     </form>
 
-    <p class="text--center">Not a member? <a href="#">Sign up now</a> <svg class="icon">
+    <p class="text--center">Not a member? <a href="register.html">Sign up now</a> <svg class="icon">
         <use xlink:href="#icon-arrow-right"></use>
     </svg></p>
 
@@ -53,39 +53,29 @@
 </svg>
 
 <script>
-    window.addEventListener("DOMContentLoaded", function() {
-        document.getElementById('my-form').addEventListener("submit", function(e) {
-            // before the code  //Esta  es la logica
-            /* do what you want with the form */
-            const usuario = document.getElementById('login__username').value
-            const pass = document.getElementById('login__password').value
-            const buscarCredenciales = async (usuario, pass) => {
-
-                const response = await fetch('http:/localhost:3000/verificarCredenciales', {
-                    method:'POST',
-                    body: JSON.stringify({usuario, pass})
-                })
-                console.log(response)
-                const frase = await response.json()
-                //const fraseContainer = document.getElementById("frase")
-                console.log(frase)
-                //fraseContainer.innerHTML = frase;
-                return frase
-            }
-
-            const frase = buscarCredenciales(usuario, pass)
-
-            if(frase.exist === true){
-                //Continua a la siguiente pagina
-                window.location.href = 'SuperUsuario/mostrarFrasesCodificadasS.html'
-            }else{
-                //No continues
-                e.preventDefault();
-                return;
-            }
-
-
+    document.getElementById('my-form').addEventListener("submit", async(e) => {
+        // before the code  //Esta  es la logica
+        /* do what you want with the form */
+        e.preventDefault()
+        const usuario = document.getElementById('login__username').value
+        const pass = document.getElementById('login__password').value
+        const response = await fetch('http:/localhost:3000/verificarCredenciales', {
+            method:'POST',
+            body: JSON.stringify({usuario, pass})
         })
+        console.log(response)
+        const respuesta = await response.json()
+        console.log(respuesta)
+
+        if(respuesta.exist === true){
+            //Continua a la siguiente pagina
+            window.location.href = 'mostrarFrasesCodificadasS.html'
+        }else{
+            //No continues
+            e.preventDefault();
+            return;
+        }
+
     });
 
 </script>
