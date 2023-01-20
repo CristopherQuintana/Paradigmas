@@ -16,6 +16,7 @@ const cors = require("cors");
 const readline = require("readline");
 const fs = require("fs");
 const app = express();
+const port = 3000;
 
 let fraseSec = "No ha sido cambiada";
 let fraseEn = "No ha sido cambiada";
@@ -88,14 +89,12 @@ app.get("/fraseCodificada", (req, res) => {
   res.send(fraseEn); //Muestra en el front
 });
 
-app.get("/mostrarFrasesCodificadas", (req, res) => {
-  //Lee el archivo frasesCodificadas
-    fs.readFile("./controllers/frasesCodificadas.txt", (err, fd) => {
-    //Se especifica la ruta del archivo txt
-    if (err) throw err; //Si esque existe un error, lo retorna
-    const dataArray = fd.toString().split("\n"); //fd es lo obtenido del txt, lo conviertes a string y se separa con saltos de linea
-    dataArray.pop(); //Elimina el ultimo salto de linea, sin este codigo se creará un botón sin texto, vacío
-    res.send(JSON.stringify(dataArray)); //Muestra la frase en el front
+app.get("/mostrarFrasesCodificadas", (req, res) => {  //Lee el archivo frasesCodificadas
+    fs.readFile("./controllers/frasesCodificadas.txt", (err, fd) => {  //Se especifica la ruta del archivo txt
+      if (err) throw err; //Si esque existe un error, lo retorna
+      const dataArray = fd.toString().split("\n"); //fd es lo obtenido del txt, lo conviertes a string y se separa con saltos de linea
+      dataArray.pop(); //Elimina el ultimo salto de linea, sin este codigo se creará un botón sin texto, vacío
+      res.send(JSON.stringify(dataArray)); //Muestra la frase en el front
     });
 });
 
@@ -109,20 +108,32 @@ app.get("/mostrarFrasesCodificadas", (req, res) => {
 
 app.post("/verificarCredenciales", (req, res) => {
   try {
+    let user = req.body.usuario;
+    let pass = req.body.pass;
     let data;
     fs.readFile("./controllers/UsuariosRegistrados.txt", (err, fd) => {
       const dataArray = fd.toString().split("\n");
       data = dataArray;
     });
-    if (true) {
-      res.send({ exist: true });
+    let existe = false;
+    for(usuario of data){
+      let datos = data.split(";")
+      if(datos[0] === user && datos[1] === pass){
+        existe = true;
+        return;
+      }
+    }
+    console.log(existe)
+    if (existe === true) {
+      res.send(JSON.stringify({ exist: true }));
     } else {
-      res.send({ exist: false });
+      res.send(JSON.stringify({ exist: false }));
     }
   } catch (error) {
-    res.send({ exist: false });
+    res.send(JSON.stringify({ exist: false }));
   }
 });
+
 app.post("/decodificarFraseS", (req, res) => {
     const frase = req.body.frase.split(",");
     const dataSecreta = buscarID(frase[0]);
@@ -164,3 +175,14 @@ app.listen(port, () => {
 //     const {port} = server.address()  //destructuracion de objeto
 //     console.log(`Server listening on port: ${port}, serving on http://localhost:${port}`); // Server listening on port XXXXX
 // });
+
+
+//Código para el login
+app.get("/loginCheckout", (req, res) => {  //Lee el archivo frasesCodificadas
+    fs.readFile("./controllers/frasesCodificadas.txt", (err, fd) => {  //Se especifica la ruta del archivo txt
+    if (err) throw err; //Si esque existe un error, lo retorna
+    const dataArray = fd.toString().split("\n"); //fd es lo obtenido del txt, lo conviertes a string y se separa con saltos de linea
+    dataArray.pop(); //Elimina el ultimo salto de linea, sin este codigo se creará un botón sin texto, vacío
+    res.send(JSON.stringify(dataArray)); //Muestra la frase en el front
+    });
+});
