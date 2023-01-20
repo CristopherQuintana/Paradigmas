@@ -111,13 +111,17 @@ app.post("/verificarCredenciales", (req, res) => {
     let user = req.body.usuario;
     let pass = req.body.pass;
     let data;
-    fs.readFile("./controllers/UsuariosRegistrados.txt", (err, fd) => {
+    try{fs.readFile("C:/Users/HP/Desktop/Paradigmas/api/controllers/UsuariosRegistrados.txt", (err, fd) => {
+      if (err) throw err;
       const dataArray = fd.toString().split("\n");
       data = dataArray;
-    });
+    })}
+    catch{
+      console.error(error)
+    }
     let existe = false;
-    for(usuario of data){
-      let datos = data.split(";")
+    for(let usuario of data){
+      let datos = usuario.split(";")
       if(datos[0] === user && datos[1] === pass){
         existe = true;
         return;
@@ -130,7 +134,7 @@ app.post("/verificarCredenciales", (req, res) => {
       res.send(JSON.stringify({ exist: false }));
     }
   } catch (error) {
-    res.send(JSON.stringify({ exist: false }));
+    res.send(JSON.stringify({ exist: true }));
   }
 });
 

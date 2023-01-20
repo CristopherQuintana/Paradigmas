@@ -62,8 +62,8 @@
             const buscarCredenciales = async (usuario, pass) => {
 
                 const response = await fetch('http:/localhost:3000/verificarCredenciales', {
-                    method:'Post',
-                    body: {usuario, pass}
+                    method:'POST',
+                    body: JSON.stringify({usuario, pass})
                 })
                 console.log(response)
                 const frase = await response.json()
